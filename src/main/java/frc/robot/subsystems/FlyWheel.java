@@ -7,60 +7,35 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 //import java.util.Timer;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
- * Add your docs here.
- */
 public class FlyWheel extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
 
-private final TalonSRX m_flywheel;
+  private final TalonSRX m_flywheel;
 
   public FlyWheel() {
-//constructor, only runs once
-m_flywheel = new TalonSRX(0);
-
-}
-
-
-
-public void setPower(/*parameter called power*/double power){
-/*setPower is a method*/
-//m_flywheel.set(speed);
-  m_flywheel.set(null, power);
-//needs controlMode.percentOutput or TalonSRX, sets % of maximum voltage to motor
-}
-
-public void setLowPower(/*No parameter*/){
-//command used to set motor to 10% or .1 power
-    setPower(.1);
-}
-
-public void setMedPower(/*No parameter*/){
-  //command used to set motor to 50% or .5 power
-      setPower(.5);
+    //constructor, only runs once
+    m_flywheel = new TalonSRX(1);
   }
 
-public void stopPower(){
-  //safety measure to stop power
-  setPower(0);
-}
-
-public void setLowPowerAuto5(/*No parameter*/){
-  //10% for 5000 milliseconds
-  long startTime = System.currentTimeMillis();
-  long elapsedTime = System.currentTimeMillis() - startTime;
-  while(elapsedTime <= 5000){
-    setPower(.1);
-    elapsedTime = System.currentTimeMillis() - startTime;
+  public void setPower(double power){
+      m_flywheel.set(ControlMode.PercentOutput, power);
+     //needs controlMode.percentOutput or TalonSRX, sets % of maximum voltage to motor
   }
-//    Timer timer = new Timer();
-}
+
+  public void setLowPowerAuto5(){
+    //10% for 5000 milliseconds
+    long startTime = System.currentTimeMillis();
+    long elapsedTime = System.currentTimeMillis() - startTime;
+    while(elapsedTime <= 5000){
+      setPower(.1);
+      elapsedTime = System.currentTimeMillis() - startTime;
+    }
+  }
 
   @Override
   public void initDefaultCommand() {
