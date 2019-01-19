@@ -19,6 +19,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 //import frc.robot.Robot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class FlyWheel extends Subsystem {
 
@@ -41,14 +42,20 @@ public class FlyWheel extends Subsystem {
       m_flywheel.set(ControlMode.PercentOutput, power);
   }
 
+  int setClock = 0;
   public void setLowPowerAuto5(int time){
     //10% for 5000 milliseconds
+
+    if(setClock == 0){
+      m_startTime = Timer.getFPGATimestamp();
+      setClock += 1;
+    }
     
-    m_startTime = Timer.getFPGATimestamp();
     double timeForAuto = Timer.getFPGATimestamp() - m_startTime;
     
     while(timeForAuto <= time){
       setPower(.1);
+      timeForAuto = Timer.getFPGATimestamp() - m_startTime;
     }
     setPower(0);
   }
@@ -69,10 +76,16 @@ public class FlyWheel extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
-    //method example
   }
+
+  public void reportToSmartdashboard(){
+    SmartDashboard.putNumber("position", getPosition());
+    SmartDashboard.putNumber("Velocity", getVelocity());
+    SmartDashboard.putNumber("Current", getCurrent());
+    SmartDashboard.putNumber("Voltage", getVoltage());
+    SmartDashboard.putNumber("setClock", setClock);
+  }
+
   public void startLog() {
     // Check to see if flash drive is mounted.
     File logFolder1 = new File(m_filePath1);

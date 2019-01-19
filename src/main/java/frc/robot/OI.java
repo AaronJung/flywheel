@@ -17,7 +17,7 @@ public class OI {
     SmartDashboard.putData("reverse", new SetPower(-.10));
     SmartDashboard.putData("10%", new SetPower(.10));
     SmartDashboard.putData("full send", new SetPower(1));
-    SmartDashboard.putData("10% 5sec", new SetLowPowerAuto5());
+    SmartDashboard.putData("10% 5sec", new SetLowPowerAuto5(5));
     SmartDashboard.putData("STOP", new SetPower(0));
   }
 }

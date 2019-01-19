@@ -11,7 +11,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class SetLowPowerAuto5 extends Command {
-  public SetLowPowerAuto5() {
+
+  int m_time;
+  public SetLowPowerAuto5(int time) {
+    m_time = time;
     requires(Robot.flyWheel);
   }
 
@@ -21,6 +24,7 @@ public class SetLowPowerAuto5 extends Command {
 
   @Override
   protected void execute() {
+    Robot.flyWheel.setLowPowerAuto5(m_time);
   }
 
   @Override
